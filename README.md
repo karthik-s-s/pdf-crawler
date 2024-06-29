@@ -1,6 +1,6 @@
 # PDF Crawler and Manager
 
-## Installation 
+# Installation 
 
 # 1) git clone <repository-url>
 ``` cd pdf-crawler ```
@@ -15,7 +15,7 @@ DB_PASSWORD=password
 DB_NAME=pdf_crawler 
 ```
 
-## 4) Database Configuration:
+# 4) Database Configuration:
 Ensure MySQL is installed and running.
 Configure database settings in .env or adjust statically in models/pdfModel.js.
 
@@ -28,7 +28,8 @@ npm run dev
 
 # 6)Access the application:
 ### Open your browser and go to http://localhost:3000 to view the application.
-### Structure 
+### Structure
+```
 pdf-crawler/
 ├── controllers/
 │   └── pdfController.js
@@ -43,3 +44,4 @@ pdf-crawler/
 ├── server.js
 ├── .env
 └── package.json
+```
