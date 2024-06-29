@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Crawler Manager</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <div class="container">
+    <h1>PDF Crawler Manager</h1>
+    <button id="crawlButton">Start Manual Crawl</button>
+    <h2>Downloaded PDFs</h2>
+    <ul id="pdfList"></ul>
+  </div>
+
+  <!-- Include socket.io client library -->
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    const socket = io();
+
+    // Handle manual crawl button click
+    document.getElementById('crawlButton').addEventListener('click', () => {
+      fetch('/api/crawl', { method: 'POST' })
+        .then(response => response.text())
+        .then(data => alert(data));
+    });
+
+    // Function to open PDF in new tab
+    function openPDF(pdfTitle) {
+      window.open(`/downloads/${pdfTitle}.pdf`, '_blank');
+    }
+
+    // Function to update PDF list in UI
+    function updatePDFList(pdfMetadata) {
+      const pdfList = document.getElementById('pdfList');
+      const listItem = document.createElement('li');
+      const link = document.createElement('a');
+      link.href = `javascript:openPDF('${pdfMetadata.title}')`; // Call openPDF function
+      link.textContent = 'View PDF';
+      link.className = 'pdf-link';
+
+      listItem.innerHTML = `<span>${pdfMetadata.title}</span> (Downloaded on: ${new Date(pdfMetadata.downloadDate).toLocaleDateString()}) `;
+      listItem.appendChild(link);
+      pdfList.appendChild(listItem);
+    }
+
+    // Fetch initial list of PDFs and display in UI
+    fetch('/api/pdfs')
+      .then(response => response.json())
+      .then(data => {
+        data.forEach(pdf => {
+          updatePDFList(pdf);
+        });
+      });
+
+    // Listen for WebSocket event when PDF is downloaded
+    socket.on('pdfDownloaded', (pdfMetadata) => {
+      console.log('PDF downloaded:', pdfMetadata);
+      updatePDFList(pdfMetadata); // Update PDF list in UI
+    });
+  </script>
+</body>
+</html>
