@@ -2,7 +2,7 @@
 
 # Installation 
 
-# 1) git clone <repository-url>
+# 1) git clone [text](https://github.com/karthik-s-s/pdf-crawler.git)
 ``` cd pdf-crawler ```
 # 2) insall dependency
 ``` npm install ```
