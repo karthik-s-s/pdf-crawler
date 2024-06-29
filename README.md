@@ -2,8 +2,11 @@
 
 # Installation 
 
-# 1) git clone https://github.com/karthik-s-s/pdf-crawler.git
-``` cd pdf-crawler ```
+# 1) Clone the Repository
+``` 
+git clone https://github.com/karthik-s-s/pdf-crawler.git
+cd pdf-crawler
+```
 # 2) insall dependency
 ``` npm install ```
 # 3) Set up environment variables:
